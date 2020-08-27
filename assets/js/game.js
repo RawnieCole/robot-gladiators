@@ -1,29 +1,66 @@
 var playerName = window.prompt( "What is Your Robot's Name?" );
+var playerHealth = 100;
+var playerAttack = 10;
 
-// What is This?
-console.log( playerName );
+// You Can Also Log Multiple Values At Once Like This
+console.log( playerName, playerAttack, playerHealth );
 
-console.log( "This Logs a String, Good for Leaving Yourself a Message" );
+var enemyName = "Roborto";
+var enemyHealth = 50;
+var enemyAttack = 12;
 
-// This Will Do Math and Log 20
-console.log( 10 + 10 );
+var fight = function () {
+    // Alert Users That They Are Starting The Round
+    window.alert( "Welcome to Robot Gladiators!" );
 
-//What is This?
-console.log( "Our Robot's Name Is " + playerName );
+    //Subtract The Value Of 'playerAttack' From The Value Of 'enemyHealth' And use That Result To Update The Value In The 'enemyHealth' Variable
+    enemyHealth = enemyHealth - playerAttack;
 
-var playerName = "Tony The Robot";
+    // Log A Resulting Message To The Console So We Know That It Worked.
+    console.log(
+        playerName + " attacked " + enemyName + "." + enemyName + " now has " + enemyHealth + " health remaining."
+    );
 
-//Tony The Robot is Ready for Battle!
-console.log( "Tony The Robot" + " is Ready for Battle!" );
+    //Check Enemy's Health
+    if ( enemyHealth <= 0 ) {
+        window.alert( enemyName + " Has Died!" );
+    }
+    else {
+        window.alert( enemyName + " still has " + enemyHealth + " health left." );
+    }
 
-//"Tony The Robot is Ready for Battle!"
-console.log( playerName + " is Ready for Battle!" );
+    // Subtract The Value Of 'enemyAttack' From The Value Of 'playerHealth' And Use That Result To Update The Value In The 'playerHealth' Variable.
+    playerHealth = playerHealth - enemyAttack;
 
-//"Your Robot, Tony The Robot, Has Won!
-console.log( "Your Robot, " + playerName + ", Has Won!" );
+    // Log A Resulting Message To The Console So We Know That It Worked.
+    console.log(
+        enemyName + " attacked " + playerName + "." + playerName + " now has " + playerHealth + " health remaining."
+    );
 
-// This Creates a Function Named "Fight"
-function fight() {
-    window.alert( "The Fight Has Begun!" );
-}
-// fight();
+    // Check Player's Health
+    if ( playerHealth <= 0 ) {
+        window.alert( playerName + " Has Died!" );
+    }
+    else {
+        window.alert( playerName + " still has " + playerHealth + " health left." );
+    }
+
+    //Check To See If The Value Of The playerHealth Variable Is Greater Than 0
+    // var playerHealth = 100;
+
+    // if ( playerHealth > 0 ) {
+    // console.log( "Your Player Is Still Alive!" )
+    // }
+
+    // Check To See If The Value Of The playerHealth Variable Is Greater Than 0
+    // var playerHealth = 10;
+
+    // if ( playerHealth === 0 ) {
+    // console.log( "This Will Not Run." );
+    // }
+    // else {
+    // console.log( "This Will Run Instead." );
+    // }
+};
+// Execute Function
+fight();
