@@ -1,6 +1,7 @@
 var playerName = window.prompt( "What is Your Robot's Name?" );
 var playerHealth = 100;
 var playerAttack = 10;
+var playerMoney = 10;
 
 // You Can Also Log Multiple Values At Once Like This
 console.log( playerName, playerAttack, playerHealth );
@@ -13,54 +14,56 @@ var fight = function () {
     // Alert Users That They Are Starting The Round
     window.alert( "Welcome to Robot Gladiators!" );
 
-    //Subtract The Value Of 'playerAttack' From The Value Of 'enemyHealth' And use That Result To Update The Value In The 'enemyHealth' Variable
-    enemyHealth = enemyHealth - playerAttack;
+    // Ask User If They Would Like To Fight Or Skip This Battle
+    var promptFight = window.prompt( "Would You Like to FIGHT or SKIP This Battle?  Enter 'FIGHT' or 'SKIP' to Choose." );
 
-    // Log A Resulting Message To The Console So We Know That It Worked.
-    console.log(
-        playerName + " attacked " + enemyName + "." + enemyName + " now has " + enemyHealth + " health remaining."
-    );
+    // If Player Choses To Fight, Then Fight
+    if ( promptFight === "fight" || promptFight === "FIGHT" ) {
+        // Remove Enemy's Health By Subtracting The Amount Set In The playerAttack Variable
+        enemyHealth = enemyHealth - playerAttack;
+        console.log(
+            playerName + " attacked " + enemyName + "." + enemyName + " now has " + enemyHealth + " health remaining."
+        );
+        //Check Enemy's Health
+        if ( enemyHealth <= 0 ) {
+            window.alert( enemyName + " Has Died!" );
+        } else {
+            window.alert( enemyName + " still has " + enemyHealth + " health left." );
+        }
 
-    //Check Enemy's Health
-    if ( enemyHealth <= 0 ) {
-        window.alert( enemyName + " Has Died!" );
+        // Remove Player's Health By Subtracting The Amount Set In The enemyAttack Variable
+        playerHealth = playerHealth - enemyAttack;
+        console.log(
+            enemyName + " attacked " + playerName + "." + playerName + " now has " + playerHealth + " health remaining."
+        );
+
+        // Check Player's Health
+        if ( playerHealth <= 0 ) {
+            window.alert( playerName + " Has Died!" );
+        } else {
+            window.alert( playerName + " still has " + playerHealth + " health left." );
+        }
+
+        // If Player Choses To Skip
+    } else if ( promptFight === "skip" || promptFight === "SKIP" ) {
+        // Confirm User Wants To Skip
+        var confirmSkip = window.confirm( "Are You Sure You'd Like to Quit?" );
+
+        // If Yes (True), Leave Fight
+        if ( confirmSkip ) {
+            window.alert( playerName + " Has Decided to Skip This Fight.  Goodbye!" );
+            // Subtract Money From playerMoney for Skipping
+            playerMoney = playerMoney - 2;
+        }
+
+        // If No (False), Ask Question Again By Running fight() Again
+        else {
+            fight();
+        }
+    } else {
+        window.alert( "You Need to Pick a Valid Option.  Try Again!" );
     }
-    else {
-        window.alert( enemyName + " still has " + enemyHealth + " health left." );
-    }
 
-    // Subtract The Value Of 'enemyAttack' From The Value Of 'playerHealth' And Use That Result To Update The Value In The 'playerHealth' Variable.
-    playerHealth = playerHealth - enemyAttack;
-
-    // Log A Resulting Message To The Console So We Know That It Worked.
-    console.log(
-        enemyName + " attacked " + playerName + "." + playerName + " now has " + playerHealth + " health remaining."
-    );
-
-    // Check Player's Health
-    if ( playerHealth <= 0 ) {
-        window.alert( playerName + " Has Died!" );
-    }
-    else {
-        window.alert( playerName + " still has " + playerHealth + " health left." );
-    }
-
-    //Check To See If The Value Of The playerHealth Variable Is Greater Than 0
-    // var playerHealth = 100;
-
-    // if ( playerHealth > 0 ) {
-    // console.log( "Your Player Is Still Alive!" )
-    // }
-
-    // Check To See If The Value Of The playerHealth Variable Is Greater Than 0
-    // var playerHealth = 10;
-
-    // if ( playerHealth === 0 ) {
-    // console.log( "This Will Not Run." );
-    // }
-    // else {
-    // console.log( "This Will Run Instead." );
-    // }
 };
 // Execute Function
 fight();
