@@ -120,7 +120,6 @@ var startGame = function () {
                 if ( storeConfirm ) {
                     shop();
                 }
-
             }
         }
         else {
@@ -159,29 +158,26 @@ var endGame = function () {
 var shop = function () {
     // Ask Player What They'd Like To Do
     var shopOptionPrompt = window.prompt(
-        "Would You Like To REFILL Your Health, UPGRADE Your Attack, Or LEAVE The Store?  Please Enter One:  'REFILL', 'UPGRADE', Or 'LEAVE' To Make A Choice."
+        "Would You Like To REFILL Your Health, UPGRADE Your Attack, Or LEAVE The Store?  Please Enter One Of The Following To Make A Choice:  1 For REFILL, 2 For UPGRADE, Or 3 For LEAVE."
     );
 
     // Use Switch To Carry Out Action
+    shopOptionPrompt = parseInt( shopOptionPrompt );
     switch ( shopOptionPrompt ) {
-        case "REFILL":
-        case "refill":
+        case 1:
             playerInfo.refillHealth();
             break;
 
-        case "UPGRADE":
-        case "upgrade":
+        case 2:
             playerInfo.upgradeAttack();
             break;
 
-        case "LEAVE":
-        case "leave":
+        case 3:
             window.alert( "Leaving The Store." );
             // Do Nothing, So Function Will End
             break;
         default:
             window.alert( "You Did Not Pick A Valid Option.  Please Try Again!" );
-
             // Call shop() Again To Force Player To Pick A Valid Option
             shop();
             break;
@@ -225,7 +221,7 @@ var playerInfo = {
             this.money -= 7;
         }
         else {
-            window.alert( "You Don't Have Enough Money!" );
+            window.alert( "Sorry, You Don't Have Enough Money!" );
         }
     }, // Comma!
     upgradeAttack: function () {
@@ -235,7 +231,7 @@ var playerInfo = {
             this.money -= 7;
         }
         else {
-            window.alert( "You Don't Have Enough Money!" );
+            window.alert( "Sorry, You Don't Have Enough Money!" );
         }
     }
 };
