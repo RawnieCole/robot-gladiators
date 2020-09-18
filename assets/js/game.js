@@ -36,55 +36,66 @@ var fightOrSkip = function () {
 }
 
 var fight = function ( enemy ) {
+    // Keep Track Of Who Goes First
+    var isPlayerTurn = true;
+
+    //Randomly Change Turn Order
+    if ( Math.random() > 0.5 ) {
+        isPlayerTurn = false;
+    }
 
     // Repeat And Execute As Long As The Enemy Robot Is Alive
-    while ( enemy.health > 0 && playerInfo.health > 0 ) {
-        // Ask Player If They'd Like To Fight Or Skip Using fightOrSkip Function
-        if ( fightOrSkip() ) {
-            // If True, Leave Fight By Breaking Loop
-            break;
-        }
+    while ( playerInfo.health > 0 && enemy.health > 0 ) {
+        if ( isPlayerTurn ) {
+            // Ask Player If They'd Like To Fight Or Skip Using fightOrSkip Function
+            if ( fightOrSkip() ) {
+                // If True, Leave Fight By Breaking Loop
+                break;
+            }
 
-        // Remove Enemy's Health By Subtracting The Amount Set In The playerInfo.attack Variable
-        // Generate Random Value Based On Player's Attack Power
-        var damage = randomNumber( playerInfo.attack - 3, playerInfo.attack );
+            var damage = randomNumber( playerInfo.attack - 3, playerInfo.attack );
 
-        enemy.health = Math.max( 0, enemy.health - damage );
-        console.log(
-            playerInfo.name + " Attacked " + enemy.name + '.' + enemy.name + " Now Has " + enemy.health + " Health Remaining."
-        );
+            // Remove Enemy's Health By Subtracting The Amount Set In The playerInfo.attack Variable
+            // Generate Random Value Based On Player's Attack Power
+            enemy.health = Math.max( 0, enemy.health - damage );
+            console.log(
+                playerInfo.name + " Attacked " + enemy.name + ". " + enemy.name + " Now Has " + enemy.health + " Health Remaining." );
 
-        // Check Enemy's Health
-        // If The Enemy Robot's Health Is Zero Or Less, Exit From The Fight Loop.
-        if ( enemy.health <= 0 ) {
-            window.alert( enemy.name + " Has Died!" );
+            // Check Enemy's Health
+            // If The Enemy Robot's Health Is Zero Or Less, Exit From The Fight Loop.
+            if ( enemy.health <= 0 ) {
+                window.alert( enemy.name + " Has Died!" );
 
-            // Award Player Money For Winning
-            playerInfo.money = playerInfo.money + 20;
+                // Award Player Money For Winning
+                playerInfo.money = playerInfo.money + 20;
 
-            // Leave while() Loop Since Enemy Is Dead
-            break;
+                // Leave while() Loop Since Enemy Is Dead
+                break;
+            } else {
+                window.alert( enemy.name + " Still Has " + enemy.health + " Health Left." );
+            }
+
+            // Player Gets Attacked First
         } else {
-            window.alert( enemy.name + " Still Has " + enemy.health + " Health Left." );
+            var damage = randomNumber( enemy.attack - 3, enemy.attack );
+
+            // Remove Enemy's Health By Subtracting The Amount We Set In The Damage Variable
+            playerInfo.health = Math.max( 0, playerInfo.health - damage );
+            console.log(
+                enemy.name + " Attacked " + playerInfo.name + " Now Has " + playerInfo.health + " Health Remaing."
+            );
+
+            // Check Player's Health
+            if ( playerInfo.health <= 0 ) {
+                window.alert( playerInfo.name + " Has Died!" );
+                // Leave while() Loop If Player Is Dead
+                break;
+            } else {
+                window.alert( playerInfo.name + " Still Has " + playerInfo.health + " Health Left." );
+            }
         }
-
-        // Remove Player's Health By Subtracting The Amount Set In The enemy.attack Variable
-        // Generate Random Damage Value Based on Enemy's Attack Power
-        var damage = randomNumber( enemy.attack - 3, enemy.attack );
-
-        playerInfo.health = Math.max( 0, playerInfo.health - damage );
-        console.log(
-            enemy.name + " Attacked " + playerInfo.name + '.' + playerInfo.name + " Now Has " + playerInfo.health + " Health Remaining."
-        );
-
-        // Check Player's Health
-        if ( playerInfo.health <= 0 ) {
-            window.alert( playerInfo.name + " Has Died!" );
-            // Leave while() Loop If Player Is Dead
-            break;
-        } else {
-            window.alert( playerInfo.name + " Still Has " + playerInfo.health + " Health Left." );
-        }
+        // Switch Turn Order For Next Round
+        isPlayerTurn = !isPlayerTurn;
     }
 };
 
