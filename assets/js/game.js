@@ -145,12 +145,23 @@ var startGame = function () {
 
 // Function To End The Entire Game
 var endGame = function () {
-    // If Player Is Stil Alive, Player Wins!
-    if ( playerInfo.health > 0 ) {
-        window.alert( "Great Job, You've Survived The Game!  You Now Have A Score Of " + playerInfo.money + "." );
+    window.alert( "The Game Has Now Ended.  Let's See How You Did!" );
+
+    // Check localStorage For High Score, If It's Not There, Use 0
+    var highScore = localStorage.getItem( "highscore" );
+    if ( highScore === null ) {
+        highScore = 0;
+    }
+
+    // If Player Has More Money Than The High Score, Player Has New High Score!
+    if ( playerInfo.money > highScore ) {
+        localStorage.setItem( "highscore", playerInfo.money );
+        localStorage.setItem( "name", playerInfo.name );
+
+        alert( playerInfo.name + " Now Has The High Score Of " + playerInfo.money + "!" );
     }
     else {
-        window.alert( "You've Lost Your Robot In Battle." );
+        alert( playerInfo.name + " Did Not Beat The High Score of " + highScore + ". Maybe Next Time!" );
     }
 
     // Ask Player If They'd Like To Play Again
@@ -163,7 +174,7 @@ var endGame = function () {
     else {
         window.alert( "Thank You For Playing Robot Gladiators!  Come Back Soon!" );
     }
-}
+};
 
 // Shop Function
 var shop = function () {
@@ -218,12 +229,12 @@ var getPlayerName = function () {
 var playerInfo = {
     name: getPlayerName(),
     health: 100,
-    attack: 10,
-    money: 10,
+    attack: 20,
+    money: 20,
     reset: function () {
         this.health = 100;
-        this.attack = 10;
-        this.money = 10;
+        this.attack = 20;
+        this.money = 20;
     }, // Comma!
     refillHealth: function () {
         if ( this.money >= 7 ) {
@@ -237,8 +248,8 @@ var playerInfo = {
     }, // Comma!
     upgradeAttack: function () {
         if ( this.money >= 7 ) {
-            window.alert( "Upgrading Player's Attack By 6 For 7 Dollars." );
-            this.attack += 6;
+            window.alert( "Upgrading Player's Attack By 10 For 7 Dollars." );
+            this.attack += 10;
             this.money -= 7;
         }
         else {
